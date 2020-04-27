@@ -2,7 +2,7 @@
     ViewData["Title"] = "Clients";
     int counter = 1;
 }
-@model PagingList<Client>
+@model PagingList<ClientExt>
 
 <nav class="nav_header">
     <a asp-controller="Client" asp-action="New" class="btnClient">Regiter New Client</a>
@@ -24,11 +24,11 @@
                 <tr class="trow">
                     <td class="table_item1">@c</td>
                     <td class="table_item2">@i.LastName, @i.FirstName; DOB: @i.DateOfBirth.ToShortDateString()</td>
-                    <td class="table_item3"></td>
+                    <td class="table_item3">@i.Abonements</td>
                     <td class="table_item4">
-                        <a class="btnClient">Edit</a>
-                        <a class="btnClient">Delete</a>
-                        <a class="btnClient">Train</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Edit">Edit</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Delete">Delete</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Train">Train</a>
                     </td>
                 </tr>
                 counter++;

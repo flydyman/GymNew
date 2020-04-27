@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,12 +53,20 @@ namespace HomeWork.Controllers
 
         public IActionResult Clients (int page=1)
         {
-            PagingList<Client> model = new PagingList<Client>{
+            PagingList<ClientExt> model = new PagingList<ClientExt>{
                 CurrentPage = page,
                 PerPage = ItemsOnPage,
                 Count = db.Clients.Count(),
-                Items = db.Clients.OrderBy(x=>x.LastName).OrderBy(x=>x.FirstName)
-                    .Skip((page-1) * ItemsOnPage).Take(ItemsOnPage).ToList()
+                Items = (
+                    from client in db.Clients
+                    select new ClientExt{
+                        LastName = client.LastName,
+                        FirstName = client.FirstName,
+                        DateOfBirth = client.DateOfBirth,
+                        Gender = client.Gender,
+                        Abonements = db.Abonements.Where(x=>x.Id_Client == client.Id).Count()
+                    }
+                ).ToList()
             };
             
             return View(model);
@@ -75,6 +84,28 @@ namespace HomeWork.Controllers
             
                 db.Clients.Add(model);
                 db.SaveChanges();
+            return RedirectToAction("Clients");
+        }
+
+        [HttpGet]
+        public IActionResult Edit (int id)
+        {
+            Client model = db.Clients.Find(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (Client model)
+        {
+            db.Clients.Update(model);
+            db.SaveChanges();
+            return RedirectToAction("Clients");
+        }
+
+        public IActionResult Delete (int id)
+        {
+            db.Clients.Remove(db.Clients.Find(id));
+            db.SaveChanges();
             return RedirectToAction("Clients");
         }
     }
