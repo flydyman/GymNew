@@ -1,0 +1,314 @@
+﻿body {
+    background-color: #fff;
+    font-size: 14px;
+    color: #333;
+    /* 
+    font-family: 'Kaushan Script', cursive;
+    font-family: 'Patrick Hand', cursive;
+    font-family: 'Pangolin', cursive;
+    */
+    font-family: 'Pacifico', cursive;
+    line-height: 1.6;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+}
+
+
+/* _Layout стили */
+
+.full_page {
+    width: 100%;
+    max-width: 1000px;
+    height: 99vh;
+    margin: 0 auto;
+    background-color: aquamarine;
+}
+
+.mmenu {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    margin: auto 15px;
+}
+
+
+/* Логотип */
+
+.mmenu_txt_logo {
+    font-size: 32px;
+    color: #272;
+    text-decoration: none;
+    transition: color .2s linear;
+}
+
+.mmenu_txt_logo:after {
+    content: "";
+    width: 100%;
+    align-self: center;
+    height: 4px;
+    display: block;
+    background-color: #922;
+    opacity: 0;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    transition: opacity .2s linear;
+}
+
+.mmenu_txt_logo:hover {
+    color: #922;
+}
+
+.mmenu_txt_logo:hover:after {
+    opacity: 1;
+}
+
+
+/* Пункты главного меню */
+
+.mmenu_link {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-right: 20px;
+    padding: 0 10px;
+    border: #333 3px solid;
+    border-radius: 5px;
+    background-color: #fed;
+    transition: all .2s linear;
+}
+
+.mmenu_link:hover {
+    background-color: #922;
+    color: #fed;
+    border-color: #fed;
+}
+
+
+/* Страница поиска клиентов */
+
+.search_form {
+    align-content: center;
+    margin-top: 50px;
+    justify-content: center;
+    text-align: center;
+}
+
+.noresults {
+    text-align: center;
+    font-size: 48px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #922;
+}
+
+.caption_search {
+    font-size: 20px;
+    height: 20px;
+}
+
+.inpSearch {
+    text-decoration: none;
+    height: 100%;
+    max-height: 20px;
+    padding: 15px;
+}
+
+.btnSearch {
+    text-decoration: none;
+    border: 3px #333 solid;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-family: 'Kaushan Script', cursive;
+    text-transform: uppercase;
+    font-size: 20px;
+    color: #333;
+    background-color: #fed;
+    transition: all .2s linear;
+}
+
+.btnSearch:hover {
+    background-color: #922;
+    color: #fed;
+    border-color: #fed;
+}
+
+
+/* Клиенты */
+
+.table {
+    margin-left: 20px;
+    margin-right: 20px;
+    border-top: 5px #666 solid;
+    border-bottom: 5px #666 solid;
+    border-radius: 5px;
+}
+
+.table_new {
+    width: 100%;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    margin-top: 30px;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
+    text-align: center;
+}
+
+.new_cell_caption {
+    text-align: right;
+}
+
+.new_cell_edit {
+    text-align: left;
+}
+
+.table_half {
+    width: 50%;
+}
+
+.nav_header {
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.theader {
+    font-weight: 700;
+    font-size: 48px;
+    font-family: 'Patrick Hand', cursive;
+    text-align: center;
+    color: #333;
+    margin-top: 30px;
+}
+
+.trow {
+    font-size: 20px;
+    color: #333;
+    font-family: 'Pangolin', cursive;
+    opacity: .7;
+    transition: all .1s linear;
+    border-top: 2px #333 solid;
+    border-bottom: 2px #333 solid;
+    border-radius: 5px;
+}
+
+.trow:hover {
+    font-weight: 700;
+    opacity: 1;
+}
+
+.table_head1 {
+    text-align: center;
+    width: 5%;
+    max-width: 30px;
+    border-top: 5px #333 solid;
+    border-bottom: 5px #333 solid;
+}
+
+.table_head2 {
+    text-align: center;
+    width: 80%;
+    border-top: 5px #333 solid;
+    border-bottom: 5px #333 solid;
+}
+
+.table_head3 {
+    text-align: center;
+    width: 5%;
+    max-width: 60px;
+    border-top: 5px #333 solid;
+    border-bottom: 5px #333 solid;
+}
+
+.table_head4 {
+    text-align: center;
+    width: 10%;
+    max-width: 100px;
+    border-top: 5px #333 solid;
+    border-bottom: 5px #333 solid;
+}
+
+.table_item1 {
+    text-align: center;
+}
+
+.table_item2 {
+    text-align: left;
+}
+
+.table_item3 {
+    text-align: center;
+}
+
+.table_item4 {
+    text-align: center;
+}
+
+.btnClient {
+    color: #333;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Pangolin', cursive;
+    font-size: 20px;
+    padding: 0 10px;
+    margin-top: 15px;
+    min-width: 95px;
+    opacity: .7;
+    border: 3px #333 solid;
+    border-radius: 5px;
+    transition: all .2s linear;
+}
+
+.btnClient:hover {
+    background-color: #333;
+    color: #fed;
+    opacity: 1;
+}
+
+.lnkPage {
+    text-decoration: none;
+    color: #0c2;
+    font-weight: 700;
+    opacity: .7;
+    transition: all .2s linear;
+}
+
+.lnkPage:hover {
+    color: #922;
+    opacity: 1;
+}
+
+.tfooter {
+    text-align: center;
+    color: #666;
+}
+
+
+/* EOF */
+
+.footer {
+    position: absolute;
+    bottom: 0px;
+}

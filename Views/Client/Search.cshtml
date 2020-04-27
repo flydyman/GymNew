@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Search Client";
+}
+<div class="search_form">
+@using (Html.BeginForm("SearchResult", "Client", FormMethod.Post))
+{
+    <div>
+        <span class="caption_search">Last name: <input class="inpSearch" type="text" name="searchString" /></span>
+        <input class="btnSearch" type="submit" value="Search" />
+    </div>
+}
+</div>

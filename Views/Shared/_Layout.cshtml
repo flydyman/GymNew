@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gymnastic Hall</title>
+    <!-- link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" / -->
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Pacifico&family=Pangolin&family=Patrick+Hand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <div class="full_page">
+    <header class="header">
+        <nav >
+            <div class="mmenu">
+                <a class="mmenu_txt_logo" asp-controller="Home" asp-action="Index">Gymnastic Hall</a>
+                <div >
+                    <a class="mmenu_link" asp-controller="Home" asp-action="Index">Today</a>
+                    <a class="mmenu_link" asp-controller="Client" asp-action="Search">Search</a>
+                    <a class="mmenu_link" asp-controller="Client" asp-action="Clients">Clients</a>
+                    <a class="mmenu_link" asp-controller="Group" asp-action="Index">Groups</a>
+                    <a class="mmenu_link" asp-controller="Trainer" asp-action="Index">Trainers</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div >
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer">
+        <div>
+            &copy; 2020 - My Fckng HomeWork
+        </div>
+    </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script -->
+    <script src="~/js/site.js" asp-append-version="false"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

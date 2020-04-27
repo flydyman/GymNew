@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Search Result";
+}
+@model PagingList<Client>
+
+@if (Model != null)
+{
+    @foreach (Client c in Model.Items)
+    {
+        <p>
+            @c.LastName, @c.FirstName
+        </p>
+    }
+} else {
+    <p class="noresults">No results :(</p>
+}

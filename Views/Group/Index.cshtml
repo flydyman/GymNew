@@ -1,0 +1,60 @@
+@{
+    ViewData["Title"] = "Basic Groups";
+    int counter = 1;
+}
+@model PagingList<BasicGroup>
+
+<nav class="nav_header">
+    <a asp-controller="Group" asp-action="New" class="btnClient">Add New Basic Group</a>
+</nav>
+@if (Model.Count>0){
+<table class="table">
+        <theader class="theader">
+            <th class="table_head1">#</th>
+            <th class="table_head2">Trainer</th>
+            <th class="table_head3"># Clients</th>
+            <th class="table_head4">Edit</th>
+        </theader>
+        <tbody>
+            @foreach( var i in Model.Items)
+            {
+                int c = (Model.CurrentPage-1)*Model.PerPage + counter;
+                <tr class="trow">
+                    <td class="table_item1">@c</td>
+                    <td class="table_item2">@i.Description </td>
+                    <th class="table_item3">@i.MaxClients<br /> $@i.Costs</th>
+                    <td class="table_item4">
+                        <a class="btnClient" asp-controller="Group" asp-action="Edit" asp-route-id="@i.Id">Edit</a>
+                        <a class="btnClient" asp-controller="Group" asp-action="Delete" asp-route-id="@i.Id">Delete</a>
+                    </td>
+                </tr>
+                counter++;
+            }
+            <tr><td colspan="4" class="tfooter">
+                Pages <br/>
+                @{
+                    int NextPage = Model.CurrentPage + 1;
+                    int PrevPage = Model.CurrentPage - 1;
+                    int LastPage = Model.Count % Model.PerPage != 0 ? 
+                        Model.Count / Model.PerPage +1 :
+                        Model.Count / Model.PerPage;
+                }
+                @if (Model.CurrentPage > 1)
+                {
+                    <a class="lnkPage" asp-controller="Group" asp-action="Index" asp-route-page="1">&lt;&lt;</a> 
+                    <a class="lnkPage" asp-controller="Group" asp-action="Index" asp-route-page=@PrevPage>&lt;</a> 
+                }
+                @Model.CurrentPage 
+                
+                @if (Model.CurrentPage < Model.Count / Model.PerPage)
+                {
+                    
+                    <a class="lnkPage" asp-controller="Group" asp-action="Index" asp-route-page="@NextPage">&gt; </a>
+                    <a class="lnkPage" asp-controller="Group" asp-action="Index" asp-route-page="@LastPage">&gt;&gt; </a>
+                }
+            </td></tr>
+        </tbody>
+    </table>
+} else {
+    <p class="noresults">No groups yet :(</p>
+}

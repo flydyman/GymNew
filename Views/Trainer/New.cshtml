@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "New Trainer";
+}
+@model Trainer
+
+<div class="table_new">
+    <table class="table_new">
+        <thead>
+            <th class="table_half"></th>
+            <th class="table_half"></th>
+        </thead>
+@using (Html.BeginForm("New", "Trainer", FormMethod.Post)){
+    @Html.HiddenFor(x=>x.Id)
+    <tr>
+        <td class="new_cell_caption">Last Name</td>
+        <td class="new_cell_edit">@Html.EditorFor(x => x.LastName)</td>
+    </tr>
+    <tr>
+        <td class="new_cell_caption">First Name</td>
+        <td class="new_cell_edit">@Html.EditorFor(x => x.FirstName)</td>
+    </tr>
+    <tr>
+        <td class="table_new" colspan="2"><input class="btnClient" type="submit" value="Create" />
+        <a class="btnClient" asp-action="Index" asp-controller="Trainer">Cancel</a></td>
+    </tr>
+}
+</table>
+</div>
