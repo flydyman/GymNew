@@ -266,6 +266,14 @@ h6 {
     text-align: center;
 }
 
+.header_for_client {
+    text-align: center;
+    font-family: 'Pangolin', cursive;
+    font-size: 32px;
+    color: #272;
+    font-weight: 700;
+}
+
 .btnClient {
     color: #333;
     text-decoration: none;
@@ -273,7 +281,7 @@ h6 {
     font-family: 'Pangolin', cursive;
     font-size: 20px;
     padding: 0 10px;
-    margin-top: 15px;
+    /* margin-top: 15px; */
     min-width: 95px;
     opacity: .7;
     border: 3px #333 solid;
@@ -303,6 +311,47 @@ h6 {
 .tfooter {
     text-align: center;
     color: #666;
+}
+
+
+/* Календарь */
+
+.table_calendar {
+    width: 100%;
+    margin-top: 42px;
+    border-top: 5px #333 solid;
+    border-bottom: 5px #333 solid;
+    border-radius: 5px;
+    justify-self: center;
+    font-size: 20px;
+}
+
+.tc_col1 {
+    width: 50px;
+    border-top: 3px #666 solid;
+    border-bottom: 3px #666 solid;
+}
+
+.tc_col2 {
+    width: auto;
+    border-top: 3px #666 solid;
+    border-bottom: 3px #666 solid;
+}
+
+.tc_col3 {
+    width: 50px;
+    border-top: 3px #666 solid;
+    border-bottom: 3px #666 solid;
+}
+
+.tc_col4 {
+    width: 150px;
+    border-top: 3px #666 solid;
+    border-bottom: 3px #666 solid;
+}
+
+.tc_center {
+    text-align: center;
 }
 
 

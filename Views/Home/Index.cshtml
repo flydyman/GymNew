@@ -3,12 +3,34 @@
 }
 @model List<ShortTrainingInfo>
 
+<table class="table_calendar">
+    <thead>
+        <th class="tc_col1">Start</th>
+        <th class="tc_col2">Trainer</th>
+        <th class="tc_col3">Clients</th>
+        <th class="tc_col4">Edit</th>
+    </thead>
+    <tbody>
 @foreach (var item in Model)
 {
-    <div>
-        @item.StartAt.ToString("HH:mm") 
-        @if (!String.IsNullOrEmpty(item.TrainerName)){
-            @item.StartAt.ToString();
-        }
-    </div>
+    <tr>
+        <td>@item.StartAt.ToString("HH:mm") </td>
+        <td>@if (!String.IsNullOrEmpty(item.TrainerName)){
+            @item.StartAt.ToString()
+        }</td>
+        <td>@if (!String.IsNullOrEmpty(item.TrainerName)){
+            <div>@item.RegisteredClients frasl; @item.MaxClients</div>
+        }</td>
+        <td class="tc_center">
+            @if (!String.IsNullOrEmpty(item.TrainerName)){
+                <a class="btnClient">Assign</a>
+                <a class="btnClient">Edit</a>
+                <a class="btnClient">Delete</a>
+            } else {
+                <a class="btnClient">Create</a>
+            }
+        </td>
+    </tr>
 }
+</tbody>
+</table>

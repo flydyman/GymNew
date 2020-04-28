@@ -60,6 +60,7 @@ namespace HomeWork.Controllers
                 Items = (
                     from client in db.Clients
                     select new ClientExt{
+                        Id = client.Id,
                         LastName = client.LastName,
                         FirstName = client.FirstName,
                         DateOfBirth = client.DateOfBirth,

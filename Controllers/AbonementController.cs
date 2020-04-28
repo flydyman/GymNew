@@ -23,6 +23,7 @@ namespace HomeWork.Controllers
         {
             AbonementClient model = new AbonementClient{
                 client = db.Clients.Find(idClient),
+                ID_Client = idClient,
                 StartAt = DateTime.UtcNow,
                 EndAt = DateTime.UtcNow,
                 TotalTrainings = 1,
@@ -35,17 +36,17 @@ namespace HomeWork.Controllers
         public IActionResult New (AbonementClient model)
         {
             Abonement a = new Abonement{
-                client = model.client,
+                Id_Client = model.ID_Client,
                 StartDate = model.StartAt,
                 EndDate = model.EndAt,
-                basicGroup = model.basicGroup,
+                Id_BasicGroup = model.Id_BasicGroup,
                 TotalTrainings = model.TotalTrainings,
                 CurrentTrainings = model.TotalTrainings,
-                TotalPayed = model.TotalTrainings * model.basicGroup.Costs
+                TotalPayed = model.TotalTrainings * db.BasicGroups.Find(model.Id_BasicGroup).Costs
             };
             db.Abonements.Add(a);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Client", new {model.client.Id});
+            return RedirectToAction("Edit", "Client", new {id = a.Id_Client});
         }
 
         public IActionResult Delete (int id)
@@ -54,7 +55,7 @@ namespace HomeWork.Controllers
             int c = a.client.Id;
             db.Abonements.Remove(a);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Client", new {c});
+            return RedirectToAction("Edit", "Client", new {id = c});
         }
     }
 }
