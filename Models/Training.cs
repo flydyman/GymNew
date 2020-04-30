@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -12,10 +13,6 @@ namespace HomeWork.Models
         public int Id_Creator {get;set;} // user, who created this
         [DataType(DataType.DateTime)]
         public DateTime StartAt {get;set;}
-
-        [ForeignKey("Id_Trainer")]
-        public Trainer trainer {get;set;}
-        [ForeignKey("Id_BasicGroup")]
-        public BasicGroup basicGroup {get;set;}
+        public List<TrainGroup> TrainGroups {get;set;}
     }
 }

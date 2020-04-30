@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 namespace HomeWork.Models
@@ -8,9 +9,9 @@ namespace HomeWork.Models
         public int Id_Training {get;set;}
         public int Id_Client {get;set;}
 
-        [ForeignKey("Id_Client")]
-        public Client client {get;set;}
-        [ForeignKey("Id_Training")]
-        public Training training {get;set;}
+        //[ForeignKey("Id_Client")]
+        public Client Client {get;set;}
+        //[ForeignKey("Id_Training")]
+        public Training Training {get;set;}
     }
 }

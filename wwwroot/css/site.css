@@ -266,6 +266,14 @@ h6 {
     text-align: center;
 }
 
+.row_line {
+    border-bottom: 3px #666 solid;
+}
+
+.row_border_r {
+    border-right: 2px #333 solid;
+}
+
 .header_for_client {
     text-align: center;
     font-family: 'Pangolin', cursive;

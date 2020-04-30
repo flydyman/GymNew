@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HomeWork.Models
@@ -21,5 +22,6 @@ namespace HomeWork.Models
         [DataType(DataType.Date)]
         public DateTime DateOfBirth {get;set;}
 
+        public List<TrainGroup> TrainGroups {get;set;}
     }
 }

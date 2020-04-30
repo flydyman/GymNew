@@ -18,7 +18,13 @@ namespace HomeWork.Models
 
         protected override void OnModelCreating (ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TrainGroup>().HasNoKey();
+            modelBuilder.Entity<TrainGroup>().HasKey(x=> new {x.Id_Client, x.Id_Training});
+            modelBuilder.Entity<TrainGroup>()
+                .HasOne(x=>x.Client)
+                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Client);
+            modelBuilder.Entity<TrainGroup>()
+                .HasOne(x=>x.Training)
+                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Training);
         }
     }
 }

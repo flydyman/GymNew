@@ -52,7 +52,7 @@ namespace HomeWork.Controllers
         public IActionResult Delete (int id)
         {
             Abonement a = db.Abonements.Find(id);
-            int c = a.client.Id;
+            int c = a.Id_Client;
             db.Abonements.Remove(a);
             db.SaveChanges();
             return RedirectToAction("Edit", "Client", new {id = c});

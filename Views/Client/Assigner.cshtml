@@ -1,0 +1,78 @@
+@model AssignClient
+@{
+    ViewData["Title"] = "Assign Client";
+    DateTime prevD = Model.target.AddDays(-1);
+    DateTime nextD = Model.target.AddDays(1);
+    int StartWork = ViewBag.Start;
+    int EndWork = ViewBag.End;
+}
+
+
+<p class="header_for_client">@Model.ClientName on @Model.target.Date.ToString("yyyy-MM-dd")</p>
+<table class="table_calendar">
+    <thead>
+        <th class="tc_col1">Start</th>
+        <th class="tc_col2">Trainer</th>
+        <th class="tc_col3">Clients</th>
+        <th class="tc_col4">Edit</th>
+    </thead>
+    <tbody>
+@for(int i = StartWork; i< EndWork; i++)
+{
+    ShortTrainingInfo m = Model.CalendarPage.FirstOrDefault(x=>x.StartAt.Hour == i);
+    @if (m == null)
+    {
+        DateTime newOne = new DateTime(
+            Model.target.Year,
+            Model.target.Month,
+            Model.target.Day,
+            i,
+            0,
+            0
+        );
+        <tr>
+            <td class="row_line" colspan="3">@newOne.ToString("HH:mm")</td>
+            <td class="tc_center row_line">
+                <p>Empty</p>
+            </td>
+        </tr>
+    } else {
+       <tr>
+        <td class="row_line">@m.StartAt.ToString("HH:mm") </td>
+        <td class="row_line">@m.TrainerName</td>
+        <td class="row_line"><div>@m.RegisteredClients &frasl; @m.MaxClients</div></td>
+        <td class="tc_center row_line">
+            @if (Model.Id_BasicGroup == m.Id_BasicGroup && (m.RegisteredClients< m.MaxClients || m.MaxClients == 0))
+            {
+                <a class="btnClient" asp-controller="Training" asp-action="Assign" asp-route-when="@m.StartAt" asp-route-id="@Model.Id_Client">Assign</a>
+            } else {
+                <p>Wrong group</p>
+            }
+        </td>
+    </tr> 
+    }
+}
+
+<tr>
+    <td colspan=4 class="tfooter">
+        @if (prevD.Date.CompareTo(Model.StartDate)>0)
+        {
+            AssignClient p = Model;
+            p.target = prevD;
+            <a class="btnClient" asp-action="Assigner" asp-controller="Client" asp-route-model="@p">Previous</a>
+        }
+        @{
+            AssignClient f =Model;
+            f.target = f.StartDate;
+        }
+        <a class="btnClient" asp-action="Assigner" asp-controller="Client" asp-route-model="@f">First Available</a>
+        @if (nextD.Date.CompareTo(Model.EndDate)<0)
+        {
+            AssignClient n = Model;
+            n.target = nextD;
+            <a class="btnClient" asp-action="Assigner" asp-controller="Client" asp-route-model="@n">Next</a>
+        }
+    </td>
+</tr>
+</tbody>
+</table>

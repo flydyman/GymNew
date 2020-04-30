@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using HomeWork.Models;
 using HomeWork.Models.Views;
 
@@ -15,12 +16,16 @@ namespace HomeWork.Controllers
         private GymContext db;
         private IConfiguration configuration;
         private int ItemsOnPage;
+        private int StartWorkAt;
+        private int EndWorkAt;
 
         public ClientController (GymContext context, IConfiguration config)
         {
             db = context;
             configuration = config;
             ItemsOnPage = configuration.GetSection("ViewSettings").GetValue<int>("ItemsOnPage");
+            StartWorkAt = configuration.GetSection("WorkingHours").GetValue<int>("Start");
+            EndWorkAt = configuration.GetSection("WorkingHours").GetValue<int>("End");
         }
 
         public IActionResult Search()
@@ -108,6 +113,108 @@ namespace HomeWork.Controllers
             db.Clients.Remove(db.Clients.Find(id));
             db.SaveChanges();
             return RedirectToAction("Clients");
+        }
+
+        public IActionResult Train(int id)
+        {
+            // Check count of actual abonements
+            List<Abonement> abs = db.Abonements.Where(x=> x.Id_Client == id 
+                && x.CurrentTrainings > 0
+                && x.EndDate.Date.CompareTo(DateTime.UtcNow.Date)>=0
+                ).ToList();
+            if (abs.Count() == 0) return RedirectToAction("Edit", "Client", new{id=id});
+            if (abs.Count() > 1) return ChooseAbo(abs);
+            return RedirectToAction("Chooser", "Client", new{model = abs.First()});
+        }
+
+        //[HttpGet]
+        public IActionResult ChooseAbo(List<Abonement> model)
+        {
+            /*
+            List<FullAbonement> model2 = (
+                from a in model
+                join g in db.BasicGroups on a.Id_BasicGroup equals g.Id
+                join c in db.Clients on a.Id_Client equals c.Id
+                select new FullAbonement{
+                    Id = a.Id,
+                    GroupName = $"{g.Description} until {a.EndDate.ToString("yyyy/mm/dd")}"
+                }
+            ).ToList();
+            */
+            // Что тут надо передать:
+            //  - ID - привязка
+            //  - SelectList - для дропбокса
+            //  - хз что ещё
+
+            List<DropItems> drop = (
+                from m in model
+                join bg in db.BasicGroups on m.Id_BasicGroup equals bg.Id
+                select new DropItems {
+                    Id = m.Id,
+                    Name = $"{bg.Description} - due {m.EndDate.ToShortDateString()} ({m.CurrentTrainings} of {m.TotalTrainings} visits)"
+                }
+            ).ToList();
+
+            FullAbonement model2 = new FullAbonement{
+                Id = 0,
+                Abonements = new SelectList(drop, "Id", "Name")
+            };
+            return View(model2);
+        }
+
+/*
+        [HttpGet]
+        public IActionResult Chooser(int id, DateTime? when)
+        {
+            
+        }
+*/
+        public IActionResult Assigner(AssignClient model)
+        {
+            
+            model.CalendarPage = (
+                from tr in db.Trainings
+                join bg in db.BasicGroups on tr.Id_BasicGroup equals bg.Id
+                join t in db.Trainers on tr.Id_Trainer equals t.Id
+                where tr.StartAt.Date.Equals(model.target.Date)
+                select new ShortTrainingInfo{
+                    Id = tr.Id,
+                    StartAt = tr.StartAt,
+                    TrainerName = t.FullName,
+                    MaxClients = bg.MaxClients,
+                    Id_BasicGroup = bg.Id,
+                    Id_Client = model.Id_Client,
+                    RegisteredClients = db.TrainGroups.Count(x=>x.Id_Training == tr.Id)
+                }
+            ).ToList();
+            ViewBag.Start = StartWorkAt;
+            ViewBag.End = EndWorkAt;
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Chooser(FullAbonement model)
+        {
+            //return RedirectToAction("Chooser", "Client", new {id = model.Id, when = DateTime.UtcNow.Date});
+            DateTime date = DateTime.UtcNow;
+            // Что-то умное будет тут, на часах 23:00 и голова кипит
+            // ЖОПА
+            //Abonement a = db.Abonements.Find(id);
+            AssignClient newModel = (
+                from a in db.Abonements
+                join c in db.Clients on a.Id_Client equals c.Id
+                where a.Id == model.Id
+                select new AssignClient{
+                    Id_BasicGroup = a.Id_BasicGroup,
+                    Id_Client = c.Id,
+                    ClientName = $"{c.LastName}, {c.FirstName}",
+                    StartDate = (DateTime.UtcNow.Date.CompareTo(a.StartDate.Date)>=0) ?
+                        DateTime.UtcNow.Date : a.StartDate.Date,
+                    EndDate = a.EndDate
+                }
+            ).First();
+            newModel.target = newModel.StartDate;
+            return RedirectToAction("Assigner", "Client", newModel);
         }
     }
 }

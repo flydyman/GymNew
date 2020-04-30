@@ -1,8 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
+    DateTime currD = ViewBag.currD;
+    DateTime prevD = currD.AddDays(-1);
+    DateTime nextD = currD.AddDays(1);
+    int StartWork = ViewBag.Start;
+    int EndWork = ViewBag.End;
 }
 @model List<ShortTrainingInfo>
 
+<p class="header_for_client">@currD.Date.ToString("yyyy-MM-dd")</p>
 <table class="table_calendar">
     <thead>
         <th class="tc_col1">Start</th>
@@ -11,26 +17,45 @@
         <th class="tc_col4">Edit</th>
     </thead>
     <tbody>
-@foreach (var item in Model)
+@for(int i = StartWork; i< EndWork; i++)
 {
-    <tr>
-        <td>@item.StartAt.ToString("HH:mm") </td>
-        <td>@if (!String.IsNullOrEmpty(item.TrainerName)){
-            @item.StartAt.ToString()
-        }</td>
-        <td>@if (!String.IsNullOrEmpty(item.TrainerName)){
-            <div>@item.RegisteredClients frasl; @item.MaxClients</div>
-        }</td>
-        <td class="tc_center">
-            @if (!String.IsNullOrEmpty(item.TrainerName)){
-                <a class="btnClient">Assign</a>
-                <a class="btnClient">Edit</a>
-                <a class="btnClient">Delete</a>
-            } else {
-                <a class="btnClient">Create</a>
-            }
+    ShortTrainingInfo m = Model.FirstOrDefault(x=>x.StartAt.Hour == i);
+    @if (m == null)
+    {
+        DateTime newOne = new DateTime(
+            currD.Year,
+            currD.Month,
+            currD.Day,
+            i,
+            0,
+            0
+        );
+        <tr>
+            <td class="row_line" colspan="3">@newOne.ToString("HH:mm")</td>
+            <td class="tc_center row_line">
+                <a class="btnClient" asp-controller="Training" asp-action="New" asp-route-when="@newOne">Create</a>
+            </td>
+        </tr>
+    } else {
+       <tr>
+        <td class="row_line">@m.StartAt.ToString("HH:mm") </td>
+        <td class="row_line">@m.TrainerName</td>
+        <td class="row_line"><div>@m.RegisteredClients &frasl; @m.MaxClients</div></td>
+        <td class="tc_center row_line">
+                <a class="btnClient" asp-controller="Training" asp-action="Index" asp-route-when="@m.StartAt" >Details</a>
+                <a class="btnClient" asp-controller="Training" asp-action="Edit" asp-route-when="@m.StartAt" >Edit</a>
+                <a class="btnClient" asp-controller="Training" asp-action="Delete" asp-route-when="@m.StartAt" >Delete</a>
         </td>
-    </tr>
+    </tr> 
+    }
 }
+
+<tr>
+    <td colspan=4 class="tfooter">
+        <a class="btnClient" asp-action="Index" asp-controller="Home" asp-route-date="@prevD">Previous</a>
+        <a class="btnClient" asp-action="Index" asp-controller="Home" asp-route-date="@DateTime.Now">Today</a>
+        <a class="btnClient" asp-action="Index" asp-controller="Home" asp-route-date="@nextD">Next</a>
+    </td>
+</tr>
 </tbody>
 </table>

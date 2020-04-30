@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Edit Training";
+}
+@model NewTraining
+
+<h1>@Model.StartAt.ToString("U")</h1>
+
+@using (Html.BeginForm("Edit","Training", Model, FormMethod.Post))
+{
+    @Html.HiddenFor(x=>x.Id)
+    <table class="table_new">
+        <tr>
+            <td class="new_cell_caption">Trainer</td>
+            <td class="new_cell_edit">@Html.DropDownListFor(x=>x.Id_Trainer, Model.trainers)</td>
+        </tr>
+        <tr>
+            <td class="new_cell_caption">Group</td>
+            <td class="new_cell_edit">@Html.DropDownListFor(x=>x.Id_BaseGroup, Model.groups)</td>
+        </tr>
+        <tr>
+            <td class="new_cell_caption">
+                <input class="btnClient" type="submit" value="Save" />
+            </td>
+            <td class="new_cell_edit">
+                <a class="btnClient" asp-controller="Home" asp-action="Index" asp-route-date="@Model.StartAt">Cancel</a>
+            </td></tr>
+    </table>
+}

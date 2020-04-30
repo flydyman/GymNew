@@ -1,0 +1,30 @@
+@{
+    ViewData["Title"] = "Training info";
+}
+
+@model FullTrainingInfo
+
+<table class="table_new">
+    <thead>
+        <th class="new_cell_caption table_half row_border_r">Training info</th>
+        <th class="new_cell_edit table_half row_border_r">Clients</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class ="new_cell_caption row_border_r">
+                Trainer: @Model.TrainerName<br/>
+                Starts at: @Model.StartAt.ToString("U")<br/>
+                Group: @Model.Group.Description
+            </td>
+            <td class ="new_cell_edit row_border_r">
+                @foreach (Client item in Model.Clients)
+                {
+                    <p>@item.LastName, @item.FirstName (@item.Gender)</p>
+                }
+            </td>
+        </tr>
+        <tr class="tfooter "><td colspan=2>
+            <a class="btnClient" asp-controller="Training" asp-action="Edit" asp-route-when="@Model.StartAt">Edit</a></td>
+        </tr>
+    </tbody>
+</table>

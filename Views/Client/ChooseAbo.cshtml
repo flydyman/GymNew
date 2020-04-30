@@ -1,0 +1,25 @@
+@{
+    ViewData["Title"] = "Choose Correct Abonement";
+    int id;
+}
+@model FullAbonement
+
+<div class="table_new">
+    <table class="table_new">
+        <thead>
+            <th class="table_half"></th>
+            <th class="table_half"></th>
+        </thead>
+@using (Html.BeginForm("Chooser", "Client", FormMethod.Post)){
+    <tr>
+        <td class="new_cell_caption">Abonement</td>
+        <td class="new_cell_edit">@Html.DropDownList("id", Model.Abonements)</td>
+    </tr>
+    <tr>
+        <td class="tfooter" colspan="2">
+            <input class="btnClient" type="submit" value="Got!" />
+        </td>
+    </tr>
+}
+</table>
+</div>

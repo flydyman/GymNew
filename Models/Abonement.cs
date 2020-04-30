@@ -16,10 +16,5 @@ namespace HomeWork.Models
         public int CurrentTrainings {get;set;}
         public int Id_BasicGroup {get;set;}
         public float TotalPayed {get;set;}
-
-        [ForeignKey("Id_Client")]
-        public Client client {get;set;}
-        [ForeignKey("Id_BasicGroup")]
-        public BasicGroup basicGroup {get;set;}
     }
 }

@@ -1,0 +1,31 @@
+using System;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using HomeWork.Models;
+using HomeWork.Models.Views;
+
+namespace HomeWork.Controllers
+{
+    public class CalendarController : Controller
+    {
+        private IConfiguration configuration;
+        private GymContext db;
+
+        public CalendarController (GymContext context, IConfiguration config)
+        {
+            configuration = config;
+            db = context;
+        }
+
+
+        public IActionResult NewGroup (DateTime time, Abonement target)
+        {
+            Training t = (from tr in db.Trainings
+                where tr.StartAt.Equals(time)
+                select tr).First();
+
+            return View();
+        }
+    }
+}
