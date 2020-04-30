@@ -21,10 +21,21 @@ namespace HomeWork.Models
             modelBuilder.Entity<TrainGroup>().HasKey(x=> new {x.Id_Client, x.Id_Training});
             modelBuilder.Entity<TrainGroup>()
                 .HasOne(x=>x.Client)
-                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Client);
+                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Client)
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<TrainGroup>()
                 .HasOne(x=>x.Training)
-                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Training);
+                .WithMany(x=>x.TrainGroups).HasForeignKey(x=>x.Id_Training)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Abonement>()
+                .HasOne(x=>x.Client)
+                .WithMany(x=>x.Abonements).HasForeignKey(x=>x.Id_Client)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Abonement>()
+                .HasOne(x=>x.BasicGroup)
+                .WithMany(x=>x.Abonements).HasForeignKey(x=>x.Id_BasicGroup)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

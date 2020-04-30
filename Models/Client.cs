@@ -23,5 +23,6 @@ namespace HomeWork.Models
         public DateTime DateOfBirth {get;set;}
 
         public List<TrainGroup> TrainGroups {get;set;}
+        public List<Abonement> Abonements{get;set;}
     }
 }

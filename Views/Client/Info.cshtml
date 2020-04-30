@@ -1,0 +1,43 @@
+@{
+    ViewData["Title"] = "Client Info";
+    List<Abonement> abs = ViewBag.Abonements;
+}
+@model Client
+
+<div class="table_new">
+    <table class="table_new">
+        <thead>
+            <th class="table_half"></th>
+            <th class="table_half"></th>
+        </thead>
+    <tr>
+        <td class="new_cell_caption">Full Name:</td>
+        <td class="new_cell_edit">@Model.LastName, @Model.FirstName</td>
+    </tr>
+    <tr>
+        <td class="new_cell_caption">Gender:</td>
+        <td class="new_cell_edit">@Model.Gender</td>
+    </tr>
+    <tr>
+        <td class="new_cell_caption">Date of Birth:</td>
+        <td class="new_cell_edit">@Model.DateOfBirth.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <td class="new_cell_caption">
+            <a class="btnClient" asp-controller="Client" asp-action="Edit" asp-route-id="@Model.Id">Edit Client</a>
+        </td>
+        <td class="new_cell_edit">
+            <a class="btnClient" asp-controller="Abonement" asp-action="New" asp-route-idClient="@Model.Id">Add Abonement</a>
+        </td>
+    </tr>
+</table>
+<div>
+    @foreach (Abonement a in abs)
+    {
+        <p>Assigned from @a.StartDate.ToShortDateString() to @a.EndDate.ToShortDateString(), have @a.CurrentTrainings visits of
+            @a.TotalTrainings. Payed: $@a.TotalPayed 
+            <a class="btnPurge" asp-action="Delete" asp-controller="Abonement" asp-route-id="@a.Id">Purge Abonement</a>
+        </p>
+    }
+</div>
+</div>

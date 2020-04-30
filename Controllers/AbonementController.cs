@@ -46,7 +46,7 @@ namespace HomeWork.Controllers
             };
             db.Abonements.Add(a);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Client", new {id = a.Id_Client});
+            return RedirectToAction("Info", "Client", new {id = a.Id_Client});
         }
 
         public IActionResult Delete (int id)
@@ -55,7 +55,7 @@ namespace HomeWork.Controllers
             int c = a.Id_Client;
             db.Abonements.Remove(a);
             db.SaveChanges();
-            return RedirectToAction("Edit", "Client", new {id = c});
+            return RedirectToAction("Info", "Client", new {id = c});
         }
     }
 }

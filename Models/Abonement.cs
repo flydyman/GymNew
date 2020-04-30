@@ -16,5 +16,8 @@ namespace HomeWork.Models
         public int CurrentTrainings {get;set;}
         public int Id_BasicGroup {get;set;}
         public float TotalPayed {get;set;}
+
+        public Client Client {get;set;}
+        public BasicGroup BasicGroup {get;set;}
     }
 }

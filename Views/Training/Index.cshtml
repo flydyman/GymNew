@@ -19,7 +19,10 @@
             <td class ="new_cell_edit row_border_r">
                 @foreach (Client item in Model.Clients)
                 {
-                    <p>@item.LastName, @item.FirstName (@item.Gender)</p>
+                    <p>@item.LastName, @item.FirstName (@item.Gender)
+                        <a class="btnPurge" asp-action="Remove" asp-controller="Training" asp-route-id="@Model.Id"
+                        asp-route-idClient="@item.Id" asp-route-when="@Model.StartAt">Remove</a>
+                    </p>
                 }
             </td>
         </tr>

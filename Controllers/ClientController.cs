@@ -52,7 +52,7 @@ namespace HomeWork.Controllers
             } else {
                 model = null;
             }
-
+            ViewBag.search = searchString;
             return View(model);
         }
 
@@ -70,7 +70,7 @@ namespace HomeWork.Controllers
                         FirstName = client.FirstName,
                         DateOfBirth = client.DateOfBirth,
                         Gender = client.Gender,
-                        Abonements = db.Abonements.Where(x=>x.Id_Client == client.Id).Count()
+                        AbonementsCount = db.Abonements.Where(x=>x.Id_Client == client.Id).Count()
                     }
                 ).ToList()
             };
@@ -113,6 +113,18 @@ namespace HomeWork.Controllers
             db.Clients.Remove(db.Clients.Find(id));
             db.SaveChanges();
             return RedirectToAction("Clients");
+        }
+
+        public IActionResult Info (int id)
+        {
+            Client model = db.Clients.Find(id);
+            ViewBag.Abonements = 
+            (
+                from a in db.Abonements
+                where a.Client == model
+                select a
+            ).ToList();
+            return View(model);
         }
 
         public IActionResult Train(int id)

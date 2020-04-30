@@ -26,9 +26,10 @@
                     <td class="table_item2">@i.LastName, @i.FirstName; DOB: @i.DateOfBirth.ToShortDateString()</td>
                     <td class="table_item3">@i.Abonements</td>
                     <td class="table_item4">
-                        <a class="btnClient" asp-controller="Client" asp-route-id=@i.Id asp-action="Edit">Edit</a>
-                        <a class="btnClient" asp-controller="Client" asp-route-id=@i.Id asp-action="Delete">Delete</a>
-                        <a class="btnClient" asp-controller="Client" asp-route-id=@i.Id asp-action="Train">Train</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Info">View</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Edit">Edit</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Delete">Delete</a>
+                        <a class="btnClient" asp-controller="Client" asp-route-id="@i.Id" asp-action="Train">Train</a>
                     </td>
                 </tr>
                 counter++;

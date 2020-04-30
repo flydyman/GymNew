@@ -1,16 +1,41 @@
+@model PagingList<Client>
 @{
     ViewData["Title"] = "Search Result";
+    string searchString = ViewBag.search;
+    int prevPage = Model.CurrentPage-1;
+    int maxPage = Model.Count % Model.PerPage > 0? Model.Count/Model.PerPage +1 : Model.Count/Model.PerPage;
+    int nextPage = Model.CurrentPage +1;
 }
-@model PagingList<Client>
 
 @if (Model != null)
 {
+    <table class="table_search">
+        <thead>
+            <th class="row_client"></th>
+            <th class="row_buttons"></th>
+        </thead>
     @foreach (Client c in Model.Items)
     {
-        <p>
-            @c.LastName, @c.FirstName
-        </p>
+        <tr>
+            <td class="row_client">@c.LastName, @c.FirstName</td>
+            <td class="row_buttons">
+                <a class="btnClient" asp-controller="Client" asp-action="Edit" asp-route-id="@c.Id">Edit</a>
+                <a class="btnClient" asp-controller="Client" asp-action="Info" asp-route-id="@c.Id">View</a>
+            </td>
+        </tr>
     }
+    <tr>
+        <td colspan="2" class="row_buttons"> Pages: <br/>
+            @if (Model.CurrentPage>1) {
+                <a class="btnClient" asp-controller="Client" asp-action="SearchResult" asp-route-page="@prevPage" asp-route-searchString="@searchString">Prev</a>
+            }
+            <a class="btnClient" asp-controller="Client" asp-action="SearchResult" asp-route-page="1" asp-route-searchString="@searchString">First</a>
+            @if (Model.CurrentPage < maxPage) {
+                <a class="btnClient" asp-controller="Client" asp-action="SearchResult" asp-route-page="@nextPage" asp-route-searchString="@searchString">Next</a>
+            }
+        </td>
+    </tr>
+    </table>
 } else {
     <p class="noresults">No results :(</p>
 }

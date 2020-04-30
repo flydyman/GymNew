@@ -73,7 +73,8 @@ namespace HomeWork.Controllers
         public async Task<IActionResult> Delete(DateTime when)
         {
             Training t = db.Trainings.First(x=>x.StartAt.Equals(when));
-            db.TrainGroups.RemoveRange(db.TrainGroups.Where(x=>x.Id_Training == t.Id));
+            //db.TrainGroups.RemoveRange(db.TrainGroups.Where(x=>x.Id_Training == t.Id));
+            //await db.SaveChangesAsync();
             db.Trainings.Remove(t);
             await db.SaveChangesAsync();
 
@@ -104,6 +105,20 @@ namespace HomeWork.Controllers
             db.Trainings.Update(t);
             db.SaveChanges();
             return RedirectToAction("Index", "Home", new{date = model.StartAt.Date});
+        }
+
+        public IActionResult Remove (int id, int idClient, DateTime when)
+        {
+            // Получить абонемент, добавить посещение
+            // Удалить связь на эту тренировку, бля
+            TrainGroup t = db.TrainGroups.Where(x=>x.Id_Client == idClient && x.Id_Training == id).FirstOrDefault();
+            Training tr = db.Trainings.First(x=>x.StartAt.Equals(when));
+            Abonement a = db.Abonements.Where(x=>x.Id_Client == idClient && tr.Id_BasicGroup == x.Id_BasicGroup).FirstOrDefault();
+            a.CurrentTrainings += 1;
+            db.TrainGroups.Remove(t);
+            db.Abonements.Update(a);
+            db.SaveChanges();
+            return RedirectToAction("Index", "Training", new{when = db.Trainings.Find(id).StartAt});
         }
 
         public IActionResult Assign (DateTime when, int id)

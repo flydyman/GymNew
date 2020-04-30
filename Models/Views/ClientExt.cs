@@ -2,6 +2,6 @@ namespace HomeWork.Models.Views
 {
     public class ClientExt : Client
     {
-        public int Abonements {get;set;}
+        public int AbonementsCount {get;set;}
     }
 }
